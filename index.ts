@@ -3,29 +3,18 @@ import * as dotenv from "dotenv";
 dotenv.config();
 dotenv.config({ path: join(__dirname, "..", "/.env") });
 
+import connectServer from "./data/server";
+connectServer();
+
 import cors from "cors";
 import express from "express";
-import { usingCors } from "./utils/constants";
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const whitelist = ["https://emergencias.josefabio.com"];
-app.use(
-  usingCors
-    ? cors({
-        origin: function (origin, callback) {
-          if (!origin || whitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-          } else {
-            callback(new Error("Not allowed by CORS"));
-          }
-        },
-      })
-    : cors()
-);
+app.use(cors());
 
 import router from "./routes/routes";
 app.use(router);

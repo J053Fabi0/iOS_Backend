@@ -1,11 +1,11 @@
 import { Router } from "express";
-import notesRoutes from "./notesRoutes";
+import userRoutes from "./userRoutes";
 
 const router = Router();
 
 // Default response.
 router.get("/", (_, res) => res.send().status(200));
 
-router.use(notesRoutes);
+router.use(userRoutes);
 
 export default router;
