@@ -22,8 +22,8 @@ export const authJWT =
         if (error) return handleError(res, "Invalid JWT token", 403);
 
         // The personID will be the id of the payload, or, if testing, the parsedInt of the authorization string
-        const userId: string = (decode as jwt.JwtPayload).id;
-        const user = await getUser({ _id: userId });
+        const username: string = (decode as jwt.JwtPayload).username;
+        const user = await getUser({ username });
 
         if (!user) return handleError(res, "User not found", 404);
         if (!user.enabled) return handleError(res, "User disabled", 401);

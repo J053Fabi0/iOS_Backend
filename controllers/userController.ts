@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import handleError from "../utils/handleError";
 import PostUser from "../types/api/notes/postUser";
 import CommonResponse from "../types/commonResponse.type";
@@ -9,13 +10,13 @@ export const postUser = async ({ body }: PostUser, res: CommonResponse) => {
     const { username, name, password } = body;
     if ((await countUsers({ username })) > 0) return handleError(res, "Username already exists.", 409);
 
-    const user = await createUser({
+    await createUser({
       name,
       username,
       password: await bcrypt.hash(password, 10),
     });
 
-    res.send({ userId: user._id.toString() });
+    res.send({ authToken: jwt.sign({ username }, process.env.API_SECRET as string) });
   } catch (e) {
     handleError(res, e);
   }
