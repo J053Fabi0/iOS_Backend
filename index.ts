@@ -20,7 +20,7 @@ import router from "./routes/routes";
 app.use(router);
 
 import { address } from "ip";
-const port = 3025;
+const port = parseInt(process.env.PORT || "3025");
 app
   .listen(port, () => process.env.NODE_ENV === "test" || console.log(`Server on http://${address()}:${port}`))
   .on("error", (err: any) => process.env.NODE_ENV || console.log(err));
