@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import handleError from "../utils/handleError";
-import PostUser from "../types/api/notes/postUser";
+import PostUser from "../types/api/users/postUser";
 import CommonResponse from "../types/commonResponse.type";
 import { countUsers, createUser } from "../data/controllers/userControllers";
 

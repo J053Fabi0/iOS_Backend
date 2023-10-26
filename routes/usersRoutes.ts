@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as s from "../schemas/userSchema";
-import * as c from "../controllers/userController";
+import * as s from "../schemas/usersSchemas";
+import * as c from "../controllers/usersControllers";
 
 const userRoutes = Router();
 

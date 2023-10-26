@@ -1,5 +1,6 @@
 import { Router } from "express";
-import userRoutes from "./userRoutes";
+import userRoutes from "./usersRoutes";
+import storiesRoutes from "./storiesRoutes";
 
 const router = Router();
 
@@ -7,5 +8,6 @@ const router = Router();
 router.get("/", (_, res) => res.send().status(200));
 
 router.use(userRoutes);
+router.use(storiesRoutes);
 
 export default router;
