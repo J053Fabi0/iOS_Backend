@@ -13,16 +13,16 @@ export const authJWT =
 
     const { authorization } = req.headers;
     jwt.verify(
-      authorization || "",
+      (authorization || "").replace(/^Bearer /, ""),
 
       process.env.API_SECRET as string, //
 
       async (error, decode) => {
         // Errors on decode will be ignored if testing
-        if (error) return handleError(res, "Invalid JWT token", 403);
+        if (error || !decode || typeof decode === "string") return handleError(res, "Invalid JWT token", 403);
 
         // The personID will be the id of the payload, or, if testing, the parsedInt of the authorization string
-        const username: string = (decode as jwt.JwtPayload).username;
+        const username: string = decode.username;
         const user = await getUser({ username });
 
         if (!user) return handleError(res, "User not found", 404);
