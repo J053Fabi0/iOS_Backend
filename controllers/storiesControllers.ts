@@ -1,29 +1,44 @@
+import Jabber from "jabber";
+import miniSearch from "../data/miniSearch";
 import handleError from "../utils/handleError";
-import GetStories from "../types/api/stories/getStories";
-import CommonResponse from "../types/commonResponse.type";
+import randomNumber from "../utils/randomNumber";
+import { StoryBrief } from "../types/StoryBrief.type";
+import GetStories, { GetStoriesResponse } from "../types/api/stories/getStories";
+import GetSearchStories, { GetSearchStoriesResponse } from "../types/api/stories/getSearchStories";
 
-export const getStories = async (_: GetStories, res: CommonResponse) => {
+const jabber = new Jabber();
+
+const dummy_feeds: StoryBrief[] = [];
+for (let i = 0; i < 100; i++)
+  dummy_feeds.push({
+    id: `${i}`,
+    isPublic: true,
+    bookmarkID: `${i}`,
+    url: "https://news.google.com/",
+    thumbnail: "https://aws.s3/73hfnod24.png/",
+    title: jabber.createParagraph(randomNumber(5, 8)),
+  });
+miniSearch.addAll(dummy_feeds);
+
+export const getStories = async (_: GetStories, res: GetStoriesResponse) => {
   try {
-    res.send({
-      feed: [
-        {
-          id: "8a2618f1-809a-4d91-aca5-27c81b3d4116",
-          title: "How did bitcoin crashed?",
-          bookmarkID: "bf7f975a-4599-45ff-884f-2823630d6e6b",
-          url: "https://news.google.com/",
-          thumbnail: "https://aws.s3/73hfnod24.png/",
-          isPublic: true,
-        },
-        {
-          id: "8a2618f1-809a-4d91-aca5-27c81b3d4116",
-          title: "Another interesting story!",
-          bookmarkID: "bf7f975a-4599-45ff-884f-2823630d6e6b",
-          url: "https://amazon.com/",
-          thumbnail: "https://aws.s3/73hfnod24.png/",
-          isPublic: true,
-        },
-      ],
-    });
+    res.send({ feed: dummy_feeds });
+  } catch (e) {
+    handleError(res, e);
+  }
+};
+
+export const getSearchStories = async ({ query }: GetSearchStories, res: GetSearchStoriesResponse) => {
+  try {
+    const resultsIds = miniSearch.search(query.query);
+
+    const results: StoryBrief[] = [];
+    for (const { id } of resultsIds) {
+      const result = dummy_feeds.find((feed) => feed.id === id);
+      if (result) results.push(result);
+    }
+
+    return res.send({ results, count: results.length });
   } catch (e) {
     handleError(res, e);
   }
