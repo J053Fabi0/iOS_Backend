@@ -1,5 +1,5 @@
 import { Response } from "express";
 
-type CommonResponse = Response<any, Record<string, any>>;
+type CommonResponse<ResBody = any> = Response<ResBody, Record<string, any>>;
 
 export default CommonResponse;
