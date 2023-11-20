@@ -6,6 +6,6 @@ import * as c from "../controllers/storiesControllers";
 const storiesRoutes = Router();
 
 storiesRoutes.get("/feed", auth, s.getStories, c.getStories);
-storiesRoutes.get("/stories/search", auth, s.getSearchStories, c.getSearchStories);
+storiesRoutes.get("/search", auth, s.getSearchStories, c.getSearchStories);
 
 export default storiesRoutes;
