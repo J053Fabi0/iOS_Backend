@@ -1,4 +1,4 @@
-import { StoryBrief } from "../../StoryBrief.type";
+import StoryBrief from "../../StoryBrief.type";
 import CommonRequest from "../../commonRequest.type";
 import CommonResponse from "../../commonResponse.type";
 

@@ -9,3 +9,10 @@ export const getSearchStories = a(
   }),
   "query"
 );
+
+export const getStory = a(
+  Joi.object({
+    id: Joi.string().required(),
+  }),
+  "query"
+);

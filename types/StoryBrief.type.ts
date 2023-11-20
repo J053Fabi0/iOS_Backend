@@ -1,4 +1,4 @@
-export interface StoryBrief {
+export default interface StoryBrief {
   id: string;
   title: string;
   bookmarkID: string;
